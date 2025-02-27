@@ -72,6 +72,7 @@ for l in range(len(first_col_arrays)):
     popt,pcov=curve_fit(double_gaussian,x,y,p0=p0s[l])
     amp1,cen1,wid1,amp2,cen2,wid2= popt
     y_fit=double_gaussian(x,amp1, cen1,wid1,amp2,cen2,wid2)
+    minori_gauss=y_fit-y
     plt.plot(x,y_fit,'o-',color='green',label="fit_gauss {}".format(legend[l]))
     plt.title("{}".format(legend[l]))
     plt.xlabel('Lunghezza onda [A]', fontstyle='italic')
@@ -84,12 +85,24 @@ for l in range(len(first_col_arrays)):
     popt_2,pcov_2=curve_fit(double_lorentzian,x,y,p0=p0s[l])
     amp1,cen1,wid1,amp2,cen2,wid2= popt_2
     y_fit=double_lorentzian(x,amp1, cen1,wid1,amp2,cen2,wid2)
+    minori_lorentz=np.array(y_fit-y)
     plt.plot(x,y_fit,'o-',color='red',label="fit_lorentz {}".format(legend[l]))
     plt.title("{}".format(legend[l]))
     plt.xlabel('Lunghezza onda [A]', fontstyle='italic')
     plt.ylabel('Tensione [V]', fontstyle='italic')
     plt.legend()
     plt.grid(True)
+    plt.close()
+    
+    plt.figure()
+    plt.plt(x,minori_gauss,color='green', label='M_Gauss')
+    plt.plt(x,minori_lorentz,color='red', label='M_Lorentz')
+    plt.title("Minori {}".format(legend[l])
+    plt.xlabel('Lunghezza onda [A]', fontstyle='italic')
+    plt.ylabel('Tensione [V]', fontstyle='italic')
+    plt.grid()
+    plt.legend()
+    plt.close()
     
 
 plt.show()
